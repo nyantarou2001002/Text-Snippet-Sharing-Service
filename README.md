@@ -22,4 +22,22 @@ https://github.com/user-attachments/assets/80bb5c40-5c63-42d2-b9fc-ff4c0b167191
 
 # 使い方
 1. テキストエリアに共有したいテキストを貼り付けます。
-2. 
+2. 「Snippet Title」にタイトルを記入します。
+3. 「Language」のメニューから使用している言語を選択します。
+4. 「Expiration」のメニューからsnippetの有効期限を選択します。
+5. 「submit snippet」ボタンをクリックして共有用のURLを入手します。
+6. このURLを他の人と共有することができます。
+
+# 機能一覧
+- snippet作成
+- URL作成
+- 有効期限管理
+- コードエディターの使用
+- 複数言語対応のシンタックスハイライトを表示
+- エラーハンドリング
+
+# 使用技術
+言語：HTML,CSS Javascript, PHP
+データベース：MySQL(Amazon RDB)
+サーバー：Amazon EC2
+その他：Monaco Editor, NGINX
