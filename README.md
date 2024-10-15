@@ -38,6 +38,9 @@ https://github.com/user-attachments/assets/80bb5c40-5c63-42d2-b9fc-ff4c0b167191
 
 # 使用技術
 言語：HTML,CSS Javascript, PHP
+
 データベース：MySQL(Amazon RDB)
+
 サーバー：Amazon EC2
+
 その他：Monaco Editor, NGINX
