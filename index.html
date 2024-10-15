@@ -36,13 +36,27 @@
 <body>
     <h1>Share your Snippet</h1>
 
+    <!-- タイトル入力欄 -->
+    <label for="snippet-title">Snippet Title:</label>
+    <input type="text" id="snippet-title" placeholder="Enter your snippet title here">
+
     <!-- プログラム言語選択ドロップダウン -->
+    <label for="language-selector">Language:</label>
     <select id="language-selector">
         <option value="javascript">JavaScript</option>
         <option value="python">Python</option>
         <option value="php">PHP</option>
         <option value="html">HTML</option>
         <option value="css">CSS</option>
+    </select>
+
+    <!-- 有効期限選択ドロップダウン -->
+    <label for="expiration-selector">Expiration:</label>
+    <select id="expiration-selector">
+        <option value="10m">10 Minutes</option>
+        <option value="1h">1 Hour</option>
+        <option value="1d">1 Day</option>
+        <option value="never">Never</option>
     </select>
 
     <!-- Monaco Editorが表示される部分 -->
@@ -70,6 +84,8 @@
             document.getElementById('submit-btn').addEventListener('click', function() {
                 var snippetContent = editor.getValue();
                 var selectedLanguage = document.getElementById('language-selector').value;
+                var expiration = document.getElementById('expiration-selector').value;
+                var snippetTitle = document.getElementById('snippet-title').value;
 
                 fetch('/submit-snippet.php', {
                     method: 'POST',
@@ -78,7 +94,9 @@
                     },
                     body: JSON.stringify({
                         content: snippetContent,
-                        language: selectedLanguage
+                        language: selectedLanguage,
+                        expiration: expiration,
+                        title: snippetTitle
                     })
                 })
                 .then(response => response.json())

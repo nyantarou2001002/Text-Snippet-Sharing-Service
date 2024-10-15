@@ -29,19 +29,32 @@ try {
 $data = json_decode(file_get_contents('php://input'), true);
 $content = $data['content'] ?? '';
 $language = $data['language'] ?? '';
+$expiration = $data['expiration'] ?? 'never';
+$title = $data['title'] ?? 'Untitled';
 
-if (empty($content) || empty($language)) {
-    header('Content-Type: application/json');
-    echo json_encode(['error' => 'Content or language is missing']);
-    exit;
+// 有効期限の設定
+switch ($expiration) {
+    case '10m':
+        $expirationDate = date('Y-m-d H:i:s', strtotime('+10 minutes'));
+        break;
+    case '1h':
+        $expirationDate = date('Y-m-d H:i:s', strtotime('+1 hour'));
+        break;
+    case '1d':
+        $expirationDate = date('Y-m-d H:i:s', strtotime('+1 day'));
+        break;
+    case 'never':
+    default:
+        $expirationDate = null;  // 無期限の場合
+        break;
 }
 
 // スニペットのユニークなハッシュを生成
 $hash = hash('sha256', $content . time());
 
 try {
-    $stmt = $pdo->prepare('INSERT INTO snippets (content, language, hash) VALUES (?, ?, ?)');
-    $stmt->execute([$content, $language, $hash]);
+    $stmt = $pdo->prepare('INSERT INTO snippets (title, content, language, hash, expiration_at) VALUES (?, ?, ?, ?, ?)');
+    $stmt->execute([$title, $content, $language, $hash, $expirationDate]);
 
     // 成功した場合、ユニークなURLを生成して返す
     $url = 'http://localhost:8080/snippet/' . $hash;
