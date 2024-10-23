@@ -33,7 +33,7 @@ $snippet = $stmt->fetch();
 if ($snippet) {
     // スニペットが有効期限内か確認
     if ($snippet['expiration_at'] !== null && strtotime($snippet['expiration_at']) < time()) {
-        echo "<h1>Expired Snippet</h1>";
+        echo "<h1 class='text-center text-2xl font-bold text-red-500 mt-8'>Expired Snippet</h1>";
     } else {
         // スニペットのタイトルとコードをMonaco Editorで表示
 ?>
@@ -49,9 +49,10 @@ if ($snippet) {
                     width: 100%;
                     height: 400px;
                     border: 1px solid #ccc;
+                    border-radius: 0.375rem;
+                    /* Rounded corners */
                 }
             </style>
-            <!-- Require.jsとMonaco Editorのスクリプトを読み込み -->
             <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"></script>
             <script>
                 window.MonacoEnvironment = {
@@ -68,36 +69,41 @@ if ($snippet) {
                 };
             </script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min/vs/loader.js"></script>
+            <script src="https://cdn.tailwindcss.com"></script>
         </head>
 
-        <body>
-            <h1><?php echo htmlspecialchars($snippet['title']); ?></h1>
-            <p><strong>Language:</strong> <?php echo htmlspecialchars($snippet['language']); ?></p>
-            <p><strong>Created At:</strong> <?php echo htmlspecialchars($snippet['created_at']); ?></p>
+        <body class="bg-gray-100 text-gray-800">
+            <div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
+                <h1 class="text-2xl font-bold mb-4 text-center"><?php echo htmlspecialchars($snippet['title']); ?></h1>
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600"><strong>Language:</strong> <?php echo htmlspecialchars($snippet['language']); ?></p>
+                    <p class="text-sm text-gray-600"><strong>Created At:</strong> <?php echo htmlspecialchars($snippet['created_at']); ?></p>
+                </div>
 
-            <!-- Monaco Editorを表示 -->
-            <div id="editor"></div>
+                <!-- Monaco Editorを表示 -->
+                <div id="editor" class="rounded"></div>
 
-            <script>
-                require.config({
-                    paths: {
-                        'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min/vs'
-                    }
-                });
-                require(['vs/editor/editor.main'], function() {
-                    var editor = monaco.editor.create(document.getElementById('editor'), {
-                        value: `<?php echo addslashes($snippet['content']); ?>`, // スニペット内容をMonaco Editorに挿入
-                        language: '<?php echo htmlspecialchars($snippet['language']); ?>', // 言語を設定
-                        theme: 'vs-dark',
-                        readOnly: true // 読み取り専用
+                <script>
+                    require.config({
+                        paths: {
+                            'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.21.2/min/vs'
+                        }
                     });
-                });
-            </script>
+                    require(['vs/editor/editor.main'], function() {
+                        var editor = monaco.editor.create(document.getElementById('editor'), {
+                            value: `<?php echo addslashes($snippet['content']); ?>`,
+                            language: '<?php echo htmlspecialchars($snippet['language']); ?>',
+                            theme: 'vs-dark',
+                            readOnly: true
+                        });
+                    });
+                </script>
+            </div>
         </body>
 
         </html>
 <?php
     }
 } else {
-    echo "Snippet not found.";
+    echo "<h1 class='text-center text-2xl font-bold text-red-500 mt-8'>Snippet not found.</h1>";
 }
