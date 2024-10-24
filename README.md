@@ -7,7 +7,11 @@ https://snippet.mdtohtml.com/
 
 # デモ
 
-https://github.com/user-attachments/assets/80bb5c40-5c63-42d2-b9fc-ff4c0b167191
+
+
+https://github.com/user-attachments/assets/35361391-811b-4ada-a6d8-7a2fdb9f4466
+
+
 
 # 有効期限が過ぎた場合
 
@@ -37,7 +41,7 @@ https://github.com/user-attachments/assets/80bb5c40-5c63-42d2-b9fc-ff4c0b167191
 - エラーハンドリング
 
 # 使用技術
-言語：HTML,CSS Javascript, PHP
+言語：HTML,CSS, TailwindCSS, Javascript, PHP
 
 データベース：MySQL(Amazon RDB)
 
